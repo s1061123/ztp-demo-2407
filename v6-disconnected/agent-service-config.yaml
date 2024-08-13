@@ -1,0 +1,43 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: AgentServiceConfig
+metadata:
+ name: agent
+spec:
+  databaseStorage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  filesystemStorage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 30Gi
+  imageStorage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 50Gi
+# only for disconnected
+  mirrorRegistryRef:
+    name: assisted-installer-mirror-config
+  osImages:
+    - cpuArchitecture: "x86_64"
+      version: "414.92.202405162017-0"
+      openshiftVersion: "4.14"
+      rootFSUrl: http://lab.internals:8080/rhcos-4.14.15-x86_64-live-rootfs.x86_64.img
+      url: http://lab.internals:8080/rhcos-4.14.15-x86_64-live.x86_64.iso
+---
+apiVersion: hive.openshift.io/v1
+kind: ClusterImageSet
+metadata:
+  labels:
+    channel: fast
+    visible: 'true'
+  name: img4.14.27-x86-64-appsub
+  namespace: multicluster-engine
+spec:
+  releaseImage: quay.io/openshift-release-dev/ocp-release@sha256:4d30b359aa6600a89ed49ce6a9a5fdab54092bcb821a25480fdfbc47e66af9ec

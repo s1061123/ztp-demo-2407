@@ -1,0 +1,15 @@
+---
+apiVersion: ran.openshift.io/v1
+kind: PolicyGenTemplate
+metadata:
+  # The name will be used to generate the placementBinding and placementRule names as {name}-placementBinding and {name}-placementRule
+  name: "sno-v6-vfs"
+  namespace: "ztp-group"
+spec:
+  bindingRules:
+    # These policies will correspond to all clusters with this label:
+    sites: "sno-v6-vfs"
+  remediationAction: enforce
+  sourceFiles:
+    - fileName: DisableSnoNetworkDiag.yaml # https://github.com/openshift-kni/cnf-features-deploy/blob/release-4.12/ztp/source-crs/DisableSnoNetworkDiag.yaml
+      policyName: "config-policy"

@@ -1,0 +1,210 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: assisted-installer-mirror-config
+  namespace: multicluster-engine 
+  labels:
+    app: assisted-service
+data:
+  ca-bundle.crt: | 
+    -----BEGIN CERTIFICATE-----
+    MIIDzTCCArWgAwIBAgIUfVxh5HFulk5NgT9gnstTF/9G7YkwDQYJKoZIhvcNAQEL
+    BQAwZzELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAlZBMREwDwYDVQQHDAhOZXcgWW9y
+    azENMAsGA1UECgwEUXVheTERMA8GA1UECwwIRGl2aXNpb24xFjAUBgNVBAMMDWxh
+    Yi5pbnRlcm5hbHMwHhcNMjQwNzIzMDc1MDM2WhcNMjcwNTEzMDc1MDM2WjBnMQsw
+    CQYDVQQGEwJVUzELMAkGA1UECAwCVkExETAPBgNVBAcMCE5ldyBZb3JrMQ0wCwYD
+    VQQKDARRdWF5MREwDwYDVQQLDAhEaXZpc2lvbjEWMBQGA1UEAwwNbGFiLmludGVy
+    bmFsczCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALT0lMlACMmCj51T
+    S8mDtnKYxcVK+7UBGPLZxqW+3Vhw2JaKdx+4tp79IkE25adaoq76pV0bwi+RyKyX
+    npA6TV4AKlLPoYmmv9E70w1B7TCY4TYT/qp8nF8Prn1HVslQbpfYFJNPNYrqEC5a
+    VEH9/5BEiLg9NtaVdZSkzp68ujFBz+6lL6ayCu+DCCq3P/u22b773Dy0pZtGkN++
+    W6cUuon3iNxsev119s3xtO0I70Ibb8mj3B5kkiz08AkTxagj/O7VQTerVxpncZ13
+    EagaDuwnHRFEOoUy2EE0k3APBuEX+nZosfuwXIzlxb7hAxB+HX4q56JOpsoIFSWX
+    89yj/HECAwEAAaNxMG8wCwYDVR0PBAQDAgLkMBMGA1UdJQQMMAoGCCsGAQUFBwMB
+    MBgGA1UdEQQRMA+CDWxhYi5pbnRlcm5hbHMwEgYDVR0TAQH/BAgwBgEB/wIBATAd
+    BgNVHQ4EFgQU/NkZPi4DSws/6py8aDkJiFspi8cwDQYJKoZIhvcNAQELBQADggEB
+    ABdGZq7IetCZCadSEln8RjRqhxYr54c6aJLQXlOmpE3UXmXGztTWMUTITQqDB+07
+    6aN0lQiLq2J3aS3C/N9RSQYNoLegr3YZiNWKRKfmBo7zfRaeky9IhwfPCKRYAtPD
+    j5wOO6WlAobVigYeITM5XZ5j9IaydlqSDhLQDIcofwHes5bWEmuWtBJTV/gBmXjm
+    laccbpyeMyI2wH8gDk44GQrnqDlQCK+QzEezMm5He4NlfQK8pz1aVT8/r0jZvfVz
+    5NoQuBqY4suF0IksVGLjDUCEU2Qpa3lX0n2HoKXED3J4/kwZKy79lw64pQ/tFkBe
+    8Ow/3rFFZIjiWx/meBcDJ/Q=
+    -----END CERTIFICATE-----
+
+  registries.conf: | 
+    unqualified-search-registries = ["registry.access.redhat.com", "docker.io", "registry.redhat.io"]
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/ubi9"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/ubi9"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.access.redhat.com/ubi8"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/ubi8"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/openshift-logging"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift-logging"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.connect.redhat.com/hashicorp"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/hashicorp"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/rh-sso-7"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/rh-sso-7"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/odf4"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/odf4"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/openshift4"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift4"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/openshift-update-service"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift-update-service"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/cert-manager"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/cert-manager"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/rhel9"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/rhel9"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/openshift-service-mesh"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift-service-mesh"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/multicluster-engine"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/multicluster-engine"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/oadp"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/oadp"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/rhosdt"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/rhosdt"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/rhacm2"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/rhacm2"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/lvms4"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/lvms4"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/openshift-gitops-1"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift-gitops-1"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/rhel8"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/rhel8"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/rhceph"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/rhceph"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/f5networks"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/f5networks"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/devworkspace"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/devworkspace"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/web-terminal"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/web-terminal"
+
+    [[registry]]
+       prefix = ""
+       location = "registry.redhat.io/ubi8-minimal"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/ubi8-minimal"
+
+    [[registry]]
+       prefix = ""
+       location = "quay.io/openshift-release-dev/ocp-v4.0-art-dev"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift/release"
+
+    [[registry]]
+       prefix = ""
+       location = "quay.io/openshift-release-dev/ocp-release"
+       mirror-by-digest-only = true
+       [[registry.mirror]]
+       location = "lab.internals:8443/openshift/release-images"

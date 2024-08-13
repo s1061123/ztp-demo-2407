@@ -1,0 +1,6 @@
+generators:
+# for site1
+- example-sno.yaml
+
+resources:
+- ns.yaml

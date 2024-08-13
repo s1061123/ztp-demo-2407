@@ -1,0 +1,68 @@
+# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace example-sno
+---
+apiVersion: ran.openshift.io/v1
+kind: SiteConfig
+metadata:
+  name: "sno-v4-vfs"
+  namespace: "sno-v4-vfs"
+spec:
+  baseDomain: "example.ocp"
+  pullSecretRef:
+    name: "pull-secret"
+  clusterImageSetNameRef: "img4.14.27-x86-64-appsub"
+  sshPublicKey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKRtY9wygYTlmww8MBMXROnvAhPzQPBHgyRffi3YYAU6 tohayash@lab"
+  clusters:
+  - clusterName: "sno-v4-vfs"
+    networkType: "OVNKubernetes"
+    #installConfigOverrides:  "{\"capabilities\":{\"baselineCapabilitySet\": \"None\", \"additionalEnabledCapabilities\": [ \"marketplace\", \"NodeTuning\" ] }}"
+    clusterLabels:
+      du-profile: "4.14"
+      common: true
+      group-du-sno: ""
+      sites : "sno-v4-vfs"
+    clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+    machineNetwork:
+      - cidr: 10.111.1.0/24
+    serviceNetwork:
+      - 172.30.0.0/16
+    additionalNTPSources:
+      - 10.111.1.254
+    cpuPartitioningMode: AllNodes
+    nodes:
+      - hostName: "sno.sno-v4-vfs.example.ocp"
+        role: "master"
+        bmcAddress: "redfish-virtualmedia+http://10.111.1.253:8000/redfish/v1/Systems/5a378e09-90ad-43ea-be2d-989e6e414edf"
+        bmcCredentialsName:
+          name: "sno-bmc-secret"
+        bootMACAddress: "52:54:00:3d:9e:03"
+        bootMode: "UEFI"
+        rootDeviceHints:
+          deviceName: "/dev/vda"
+        nodeNetwork:
+          interfaces:
+            - name: eth1
+              macAddress: "52:54:00:3d:9e:03"
+          config:
+            interfaces:
+              - name: eth1
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: true
+                  address:
+                  - ip: 10.111.1.88
+                    prefix-length: 24
+                ipv6:
+                  enabled: false
+            dns-resolver:
+              config:
+                server:
+                  - 10.111.1.254
+            routes:
+              config:
+                - destination: 0.0.0.0/0
+                  next-hop-address: 10.111.1.254
+                  next-hop-interface: eth1
+                  table-id: 254
